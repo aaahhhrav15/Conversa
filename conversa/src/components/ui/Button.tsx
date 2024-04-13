@@ -38,7 +38,6 @@ const Button: FC<ButtonProps> = ({
   size,
   ...props
 }) => {
-    console.log("upstash:", process.env.UPSTASH_REDIS_REST_URL);
   return (
     <button
       className={cn(buttonVariants({ variant, size, className }))}
