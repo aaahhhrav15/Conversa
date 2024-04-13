@@ -1,5 +1,5 @@
 import { NextAuthOptions } from 'next-auth'
-// import { UpstashRedisAdapter } from '@next-auth/upstash-redis-adapter';
+import { UpstashRedisAdapter } from '@next-auth/upstash-redis-adapter';
 import { db } from './db'
 import GoogleProvider from 'next-auth/providers/google'
 // import { fetchRedis } from '@/helpers/redis';
@@ -36,19 +36,15 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      const dbUserResult = (await fetchRedis('get', `user:${token.id}`)) as
-        | string
-        | null
+      const dbUser = (await db.get(`user:${token.id}`)) as User | null;
 
-      if (!dbUserResult) {
+      if (!dbUser) {
         if (user) {
           token.id = user!.id
         }
 
         return token
       }
-
-      const dbUser = JSON.parse(dbUserResult) as User
 
       return {
         id: dbUser.id,
@@ -69,6 +65,21 @@ export const authOptions: NextAuthOptions = {
     },
     redirect() {
       return '/dashboard'
+    },
+  },
+  logger: {
+    error(code, ...message) {
+      console.error(code, ...message);
+    },
+    warn(code, ...message) {
+      console.warn(code, ...message);
+    },
+    debug(code, ...message) {
+      console.debug(code, ...message);
+      console.debug('UPSTASH_REDIS_REST_URL:', process.env.UPSTASH_REDIS_REST_URL);
+      console.debug('UPSTASH_REDIS_REST_TOKEN:', process.env.UPSTASH_REDIS_REST_TOKEN);
+      console.debug('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
+      console.debug('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET);
     },
   },
 }
