@@ -7,7 +7,7 @@ const Detail = () => {
       <div className="user">
         <img src="/avatar.png" alt="" />
         <h2>Aarav Lodha</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores nostrum sequi similique nulla maxime ullam incidunt tempore.</p>
+        <p>Lorem ipsum dolor sit amet consectetur.</p>
       </div>
       <div className="info">
         <div className="option">
@@ -33,28 +33,28 @@ const Detail = () => {
                <img src="./avatar.png" alt="" />
                <span>photo_2024_2.png</span>
              </div>
-             <img src="/download.png" alt="" />
+             <img src="/download.png" alt="" className='icon'/>
            </div>
            <div className="photoItem">
              <div className="photoDetail">
                <img src="./avatar.png" alt="" />
                <span>photo_2024_2.png</span>
              </div>
-             <img src="/download.png" alt="" />
+             <img src="/download.png" alt="" className='icon' />
            </div>
            <div className="photoItem">
              <div className="photoDetail">
                <img src="./avatar.png" alt="" />
                <span>photo_2024_2.png</span>
              </div>
-             <img src="/download.png" alt="" />
+             <img src="/download.png" alt=""  className='icon'/>
            </div>
            <div className="photoItem">
              <div className="photoDetail">
                <img src="./avatar.png" alt="" />
                <span>photo_2024_2.png</span>
              </div>
-             <img src="/download.png" alt="" />
+             <img src="/download.png" alt="" className='icon' />
            </div>
           </div>
         </div>
@@ -64,6 +64,8 @@ const Detail = () => {
             <img src="./arrowUp.png" alt="" />
           </div>
         </div>
+        <button>Block User</button>
+        <button className='logout'>Log out</button>
       </div>
     </div>
   )
