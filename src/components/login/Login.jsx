@@ -19,11 +19,17 @@ const Login = () => {
     })
   }
 
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+    }
+
   return (
     <div className='login'>
         <div className="item">
             <h2>Welcome Back</h2>
-            <form action="">
+            <form action="" onSubmit={handleLogin}>
                 <input type="email" placeholder='Email'  name='email'/>
                 <input type="password" placeholder='Password' name='password'/>
                 <button>Sign In</button>
