@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth,db } from "../../lib/firebase";
 import { set } from 'firebase/database';
+import { setDoc, doc } from "firebase/firestore";
+import { toast } from 'react-toastify';
+import upload from '../../lib/upload';
 
 const Login = () => {
 
@@ -29,14 +32,22 @@ const Login = () => {
 
         const {username, email, password} = Object.fromEntries(formData);
 
+        const imgUrl = await upload(avatar.file);
+
         try {
             const user = await createUserWithEmailAndPassword(auth, email, password);
 
             await setDoc(doc(db, "users", user.user.uid), {
                 username,
                 email,
+                avatar: imgUrl,
                 id: user.user.uid,
+                blocked:[],
             })
+            await setDoc(doc(db, "userchat", user.user.uid), {
+                chats : []
+            })
+            toast.success("Account created successfully");   
         }
         catch (error) {
             console.log(error);
