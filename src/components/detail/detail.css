@@ -108,6 +108,10 @@
 
             &.logout{
                 background-color: #5183fe;
+
+                &:hover{
+                    background-color: #2e5ad7;
+                }
             }
         }
     }

@@ -23,3 +23,11 @@ body{
   backdrop-filter: blur(19px) saturate(180%);
   display: flex;
 }
+
+.loading{
+  padding: 35px;
+  font-size: 26px;
+  border-radius: 10px;
+  background-color: rgba(17,25,40,0.9);
+
+}
