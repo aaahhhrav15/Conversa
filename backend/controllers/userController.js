@@ -3,22 +3,25 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
-    try {
+    try 
+    {
         const { fullName, username, password, confirmPassword, gender } = req.body;
-        if (!fullName || !username || !password || !confirmPassword || !gender) {
+        if (!fullName || !username || !password || !confirmPassword || !gender) 
+        {
             return res.status(400).json({ message: "All fields are required" });
         }
-        if (password !== confirmPassword) {
+        if (password !== confirmPassword) 
+        {
             return res.status(400).json({ message: "Password do not match" });
         }
 
         const user = await User.findOne({ username });
-        if (user) {
-            return res.status(400).json({ message: "Username already exit try different" });
+        if (user) 
+        {
+            return res.status(400).json({ message: "Username already exist try different" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // profilePhoto
         const maleProfilePhoto = `https://avatar.iran.liara.run/public/boy?username=${username}`;
         const femaleProfilePhoto = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
@@ -33,25 +36,31 @@ export const register = async (req, res) => {
             message: "Account created successfully.",
             success: true
         })
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.log(error);
     }
 };
 export const login = async (req, res) => {
-    try {
+    try 
+    {
         const { username, password } = req.body;
-        if (!username || !password) {
+        if (!username || !password) 
+        {
             return res.status(400).json({ message: "All fields are required" });
         };
         const user = await User.findOne({ username });
-        if (!user) {
+        if (!user) 
+        {
             return res.status(400).json({
                 message: "Incorrect username or password",
                 success: false
             })
         };
         const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isPasswordMatch) {
+        if (!isPasswordMatch) 
+        {
             return res.status(400).json({
                 message: "Incorrect username or password",
                 success: false
@@ -70,25 +79,33 @@ export const login = async (req, res) => {
             profilePhoto: user.profilePhoto
         });
 
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.log(error);
     }
 }
 export const logout = (req, res) => {
-    try {
+    try 
+    {
         return res.status(200).cookie("token", "", { maxAge: 0 }).json({
             message: "logged out successfully."
         })
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.log(error);
     }
 }
 export const getOtherUsers = async (req, res) => {
-    try {
+    try 
+    {
         const loggedInUserId = req.id;
         const otherUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
         return res.status(200).json(otherUsers);
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.log(error);
     }
 }
